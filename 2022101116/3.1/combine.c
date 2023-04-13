@@ -4,11 +4,15 @@
 typedef struct TreeNode* PtrToNode;
 typedef PtrToNode Tree;
 
+int isPBT(int count);
+
 struct TreeNode
 {
     int key;
     PtrToNode Left;
     PtrToNode Right;
+    int lcount;
+    int rcount;
 };
 
 PtrToNode CreateNode(int val);
@@ -18,7 +22,6 @@ void BeautifulTraversal(Tree T);
 
 int GetHeight(Tree T);
 int Max(int a, int b);
-
 
 int main()
 {
@@ -44,29 +47,52 @@ int main()
     
 }
 
-
 PtrToNode CreateNode(int val)
 {
     PtrToNode T = malloc(sizeof(struct TreeNode));
     T->key = val;
     T->Left = NULL;
     T->Right = NULL;
+    T->lcount = 0;
+    T->rcount = 0;
     return T;
 }
 
 PtrToNode Insert(Tree T, int val)
 {
     if(T == NULL)
+    {
         T = CreateNode(val);
-       
-    else if (val < T->key)
-        T->Left = Insert(T->Left, val);
+        return T;
+    }
 
-    else if (val > T->key)
-        T->Right = Insert(T->Right, val);
+    else
+    {
+        if(T->lcount == T->rcount)
+        {
+            T->Left = Insert(T->Left, val);
+            T->lcount++;
+        }
+            
 
-    return T;
+        else if (T->lcount > T->rcount)
+        {
+            if(isPBT(T->lcount) == 1)
+            {
+                T->Right = Insert(T->Right, val);
+                T->rcount++;
+            }
+
+            else
+            {
+                T->Left = Insert(T->Left, val);
+                T->lcount++;
+            }
+        }
+        return T;
+    }
 }
+
 
 int GetHeight(Tree T)
 {
@@ -115,4 +141,17 @@ int Max(int a, int b)
 
     else
     return b;
+}
+
+int isPBT(int count)
+{
+    count = count + 1;
+
+    while (count % 2 == 0)
+        count = count / 2;
+     
+    if (count == 1)
+        return 1;
+    else
+        return 0;
 }

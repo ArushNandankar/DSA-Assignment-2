@@ -12,15 +12,41 @@ PtrToNode CreateNode(int val)
 PtrToNode Insert(Tree T, int val)
 {
     if(T == NULL)
+    {
         T = CreateNode(val);
-       
-    else if (val < T->key)
-        T->Left = Insert(T->Left, val);
+        return T;
+    }
 
-    else if (val > T->key)
-        T->Right = Insert(T->Right, val);
+    else
+    {
+        queue Q = initQueue();
+        Enque(Q, T);
 
-    return T;
+        while(!isEmpty(Q))
+        {
+            PtrToNode Temp = Q->arr[Q->q_front];
+            Deque(Q);
+
+            if(Temp->Left != NULL)
+                Enque(Q, Temp->Left);
+
+            else
+            {
+                Temp->Left = CreateNode(val);
+                return T;
+            }
+
+             if(Temp->Right != NULL)
+                Enque(Q, Temp->Right);
+
+            else
+            {
+                Temp->Right = CreateNode(val);
+                return T;
+            }
+        }
+        return NULL;
+    }
 }
 
 int GetHeight(Tree T)
@@ -70,4 +96,57 @@ int Max(int a, int b)
 
     else
     return b;
+}
+
+void Enque (queue Q, PtrToNode p)
+{
+    if(!isFull(Q))
+    {
+        Q->q_size++;
+        Q->arr[Q->q_rear] = p;
+        Q->q_rear = (Q->q_rear+1) % MAX_ELEMENTS;
+    }
+}
+
+PtrToNode Deque (queue Q) 
+{
+    if(!isEmpty(Q))
+    {
+        Q->q_size--;
+        PtrToNode k = Q->arr[Q->q_front];
+        Q->q_front = (Q->q_front + 1) % MAX_ELEMENTS;
+        return k;
+    }
+
+    else
+    return NULL;
+}
+int isEmpty (queue Q)
+{
+    if(Q->q_size == 0)
+    return 1;
+
+    return 0;
+}
+
+int isFull (queue Q)
+{
+    if(Q->q_size == MAX_ELEMENTS)
+    return 1;
+
+    return 0;
+}
+
+queue initQueue ()
+{
+    queue Q = malloc(sizeof(struct queue));
+    Q->q_size = 0;
+    Q->q_front = 0;
+    Q->q_rear = 0;
+    return Q;
+}
+
+void destroyQueue (queue Q)
+{
+    free(Q);
 }
