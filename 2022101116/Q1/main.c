@@ -19,9 +19,9 @@ int main()
             push(S, phrase[j]);
             j++;
         }
-        
+
         for (int k = 0; k < j; k++)
-        {   
+        {
             int p = pop(S);
             if (p != phrase[k])
             {
@@ -29,57 +29,56 @@ int main()
                 break;
             }
         }
-        
+
         int count = 0;
         for (int k = 0; k < j; k++)
         {
-            if(isAleftBracket(phrase[k]))
-            count++;
+            if (isAleftBracket(phrase[k]))
+                count++;
         }
-        
+
         if (count != 0)
         {
             isBalanced = 1;
             for (int k = 0; k < j; k++)
-        {
-            if (isAleftBracket(phrase[k]))
-            push(Q, phrase[k]);
-
-            else if (isArightBracket(phrase[k]))
             {
-                if(isEmpty(Q))
+                if (isAleftBracket(phrase[k]))
+                    push(Q, phrase[k]);
+
+                else if (isArightBracket(phrase[k]))
                 {
-                    isBalanced = 0;
-                    break;
+                    if (isEmpty(Q))
+                    {
+                        isBalanced = 0;
+                        break;
+                    }
+
+                    char popped = pop(Q);
+
+                    if (!isMatching(popped, phrase[k]))
+                    {
+                        isBalanced = 0;
+                        break;
+                    }
                 }
-
-                char popped = pop(Q);
-
-                if (!isMatching(popped, phrase[k]))
-                {
-                    isBalanced = 0;
-                    break;
-                }
-
             }
         }
-        }
-        
+
         if (!isEmpty(Q))
         {
             isBalanced = 0;
         }
 
         if (isBalanced && isPalindromic)
-        printf("Balanced and Palindromic\n");
+            printf("Balanced and Palindromic\n");
 
         else if (isBalanced)
-        printf("Balanced\n");
+            printf("Balanced\n");
 
         else if (isPalindromic)
-        printf("Palindromic\n");
+            printf("Palindromic\n");
 
         else
-        printf("-1\n"); 
+            printf("-1\n");
     }
 }

@@ -1,3 +1,5 @@
+#ifndef _FUNCTIONS_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,13 +23,15 @@ node_ptr createNode(int key);
 Queue createQueue();
 int isEmpty(Queue Q);
 
-void Push(Queue head, int val);   // done
-int Pop(Queue head);              // done
-void Inject(Queue head, int val); // done
-int popRear(Queue head);          // done
-void Print(Queue head);           // done
-void PrintReverse(Queue head);    // done
+void Push(Queue head, int val);
+int Pop(Queue head);
+void Inject(Queue head, int val);
+int popRear(Queue head);
+void Print(Queue head);
+void PrintReverse(Queue head);
 int findElem(Queue head, int pos);
 void removeKElems(Queue head, int k);
 
 void PrintReverse_Recursive(Queue head, node_ptr ptr);
+
+#endif

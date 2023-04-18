@@ -162,9 +162,9 @@ void PrintReverse(Queue head)
 
 int findElem(Queue head, int pos)
 {
-    if(pos > head->size)
+    if (pos > head->size)
         return -1;
-    
+
     node_ptr Ptr = head->front;
 
     for (int i = 0; i < pos - 1; i++)
@@ -173,33 +173,28 @@ int findElem(Queue head, int pos)
     }
 
     return Ptr->key;
-    
 }
 
 void removeKElems(Queue head, int k)
 {
     if (k >= head->size)
     {
-        node_ptr temp = head->front;
-
-        while(!isEmpty(head))
-            printf("%d ", Pop(head));
-        printf("\n");
+        while (!isEmpty(head))
+            Pop(head);
     }
 
     else
     {
-        for (int i = 0; i < k; i++)       
-            printf("%d ", Pop(head));
-        printf("\n");        
+        for (int i = 0; i < k; i++)
+            Pop(head);
     }
 }
 
 void PrintReverse_Recursive(Queue head, node_ptr ptr)
 {
-    if(ptr == head->front)
+    if (ptr == head->front)
         return;
-    
+
     PrintReverse_Recursive(head, ptr->next);
     printf("%d ", ptr->key);
 }
