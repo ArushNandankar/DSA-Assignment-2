@@ -93,7 +93,7 @@ void superInsert(Tree T, long long int* lvlOrder, int n, Queue Q)
             index++;
         }
         
-        else if (canItgoUnderIt(Q->Front->e, lvlOrder[index]) == 2)
+        else if (canItgoUnderIt(Q->Front->e, lvlOrder[index]) == 2) // can go right
         {
             PtrToNode ptr = CreateNode(lvlOrder[index], Q->Front->e->key, Q->Front->e->lessThan);
             Q->Front->e->Right = ptr;
